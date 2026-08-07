@@ -17,3 +17,28 @@ class Car(models.Model):
 
     def __str__(self):
         return f'{self.make} {self.model} {self.license_plate} {self.vin_code}'
+
+
+class Order(models.Model):
+    date = models.CharField()
+    car_id = models.ForeignKey(to="Car",
+                               on_delete=models.SET_NULL,
+                               null=True,
+                               blank=True)
+    def __str__(self):
+        return self.date
+
+
+class Order_line(models.Model):
+    order_id = models.ForeignKey(to="Order",
+                                 on_delete=models.SET_NULL,
+                                 null=True,
+                                 blank=True)
+    service_id = models.ForeignKey(to="Service",
+                                   on_delete=models.SET_NULL,
+                                   null=True,
+                                   blank=True)
+    quantity = models.IntegerField()
+
+    def __str__(self):
+        return self.quantity
