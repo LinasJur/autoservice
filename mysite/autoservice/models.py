@@ -16,16 +16,17 @@ class Car(models.Model):
     client_name = models.CharField()
 
     def __str__(self):
-        return {self.license_plate}
+        return f"{self.make} {self.model}"
 
 class Order(models.Model):
-    date = models.DateTimeField(auto_now_add=True)
     car = models.ForeignKey(to="Car",
                                on_delete=models.SET_NULL,
                                null=True,
                                blank=True)
+    date = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
-        return f'{self.car} {self.date}'
+        return f'{self.car} ({self.date})'
 
 
 class Order_line(models.Model):
