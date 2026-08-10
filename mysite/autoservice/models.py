@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Service(models.Model):
     name = models.CharField()
-    price = models.FloatField()
+    price = models.IntegerField()
 
     def __str__(self):
         return self.name
@@ -16,29 +16,25 @@ class Car(models.Model):
     client_name = models.CharField()
 
     def __str__(self):
-        return f'{self.make} {self.model} {self.license_plate} {self.vin_code}'
-
+        return {self.license_plate}
 
 class Order(models.Model):
-    date = models.CharField()
-    car_id = models.ForeignKey(to="Car",
+    date = models.DateTimeField(auto_now_add=True)
+    car = models.ForeignKey(to="Car",
                                on_delete=models.SET_NULL,
                                null=True,
                                blank=True)
     def __str__(self):
-        return self.date
+        return f'{self.car} {self.date}'
 
 
 class Order_line(models.Model):
-    order_id = models.ForeignKey(to="Order",
-                                 on_delete=models.SET_NULL,
-                                 null=True,
-                                 blank=True)
-    service_id = models.ForeignKey(to="Service",
+    order = models.ForeignKey(to="Order", on_delete=models.CASCADE)
+    service = models.ForeignKey(to="Service",
                                    on_delete=models.SET_NULL,
                                    null=True,
                                    blank=True)
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(default=1)
 
     def __str__(self):
-        return self.quantity
+        return f' {self.service} - {self.quantity}'
