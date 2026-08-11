@@ -25,6 +25,15 @@ class Order(models.Model):
                                blank=True)
     date = models.DateTimeField(auto_now_add=True)
 
+    ORDER_STATUS = (
+        ('p' , 'Patvirtinta'),
+        ('v' , 'Vykdoma'),
+        ('a' , 'Atšaukta'),
+        ('į' , 'Įvykdyta'),
+    )
+
+    status = models.CharField(verbose_name="Status", max_length=1, choices=ORDER_STATUS, blank=True, default='p')
+
     def __str__(self):
         return f'{self.car} ({self.date})'
 
