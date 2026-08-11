@@ -28,14 +28,28 @@ class Order(models.Model):
     def __str__(self):
         return f'{self.car} ({self.date})'
 
+    def total(self):
+        result = 0
+        for line in self.lines.all():
+            result += line.service_price() * line.quantity
+        return result
 
-class Order_line(models.Model):
-    order = models.ForeignKey(to="Order", on_delete=models.CASCADE)
+
+class OrderLine(models.Model):
+    order = models.ForeignKey(to="Order",
+                              on_delete=models.CASCADE,
+                              related_name='lines',)
     service = models.ForeignKey(to="Service",
                                    on_delete=models.SET_NULL,
                                    null=True,
                                    blank=True)
     quantity = models.IntegerField(default=1)
+
+    def line_sum(self):
+        return self.service.price * self.quantity
+
+    def service_price(self):
+        return self.service.price
 
     def __str__(self):
         return f' {self.service} - {self.quantity}'
