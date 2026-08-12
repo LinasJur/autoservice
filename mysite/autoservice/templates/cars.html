@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %} Mašinos {% endblock %}
+
+{% block content %}
+{% for car in cars %}
+<p><b>{{car.make}}</b> {{car.model}} </p>
+{% endfor %}
+{% endblock %}
