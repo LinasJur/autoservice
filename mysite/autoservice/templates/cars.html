@@ -4,6 +4,9 @@
 
 {% block content %}
 {% for car in cars %}
-<p><b>{{car.make}}</b> {{car.model}} </p>
+<a href="{% url 'car' car.pk %}" >
+    <p><b>{{car.make}}</b> {{car.model}} </p>
+</a>
+
 {% endfor %}
 {% endblock %}

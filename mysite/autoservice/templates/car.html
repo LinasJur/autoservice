@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %} Mašina {% endblock %}
+
+{% block content %}
+<p>Gamintojas: <b>{{ car.make }}</b> </p>
+<p>Modelis: <b>{{ car.model }}</b></p>
+<p>Valstybinis numeris: <b>{{ car.license_plate }}</b></p>
+<p>Vin kodas: <b>{{ car.vin_code }}</b> </p>
+<p>Savininko vardas: <b>{{ car.client_name }}</b></p>
+
+
+{% endblock %}
