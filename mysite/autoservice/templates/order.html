@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %} Mašina {% endblock %}
+
+{% block content %}
+<p>Mašina: <b>{{ order.car }}</b> </p>
+<p>Užsakymo data: <b>{{ order.date }}</b></p>
+<p>Užsakymo statusas: <b>{{ order.get_status_display }}</b></p>
+
+{% endblock %}

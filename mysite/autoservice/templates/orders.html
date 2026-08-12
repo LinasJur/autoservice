@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %} Užsakymai {% endblock %}
+
+<h1>Užsakymai</h1>
+
+{% block content %}
+
+{% for order in orders %}
+<a href="{% url 'order' order.pk %}" >
+    <p><b>Mašina: </b>{{ order.car }} </p>
+    <hr>
+</a>
+{% endfor %}
+
+{% endblock %}
