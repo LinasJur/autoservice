@@ -6,5 +6,24 @@
 <p>Mašina: <b>{{ order.car }}</b> </p>
 <p>Užsakymo data: <b>{{ order.date }}</b></p>
 <p>Užsakymo statusas: <b>{{ order.get_status_display }}</b></p>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Paslaugos</th>
+        <th>Kaina</th>
+        <th>Kiekis</th>
+        <th>Suma</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for line in order.lines.all %}
+    <tr>
+        <td>{{ line.service.name }}</td>
+        <td>{{ line.service.price }}</td>
+        <td>{{ line.quantity }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}

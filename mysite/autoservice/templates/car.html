@@ -3,11 +3,17 @@
 {% block title %} Mašina {% endblock %}
 
 {% block content %}
+<h4> Detali informacija </h4>
+<hr>
 <p>Gamintojas: <b>{{ car.make }}</b> </p>
 <p>Modelis: <b>{{ car.model }}</b></p>
 <p>Valstybinis numeris: <b>{{ car.license_plate }}</b></p>
 <p>Vin kodas: <b>{{ car.vin_code }}</b> </p>
 <p>Savininko vardas: <b>{{ car.client_name }}</b></p>
-
+<hr>
+<h4> Taisymai </h4>
+{% for order in car.orders.all %}
+<p>{{ order }} </p>
+{% endfor %}
 
 {% endblock %}

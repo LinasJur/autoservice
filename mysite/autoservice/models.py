@@ -20,9 +20,10 @@ class Car(models.Model):
 
 class Order(models.Model):
     car = models.ForeignKey(to="Car",
-                               on_delete=models.SET_NULL,
-                               null=True,
-                               blank=True)
+                            on_delete=models.SET_NULL,
+                            null=True,
+                            blank=True,
+                            related_name='orders')
     date = models.DateTimeField(auto_now_add=True)
 
     ORDER_STATUS = (
@@ -49,9 +50,9 @@ class OrderLine(models.Model):
                               on_delete=models.CASCADE,
                               related_name='lines',)
     service = models.ForeignKey(to="Service",
-                                   on_delete=models.SET_NULL,
-                                   null=True,
-                                   blank=True)
+                                on_delete=models.SET_NULL,
+                                null=True,
+                                blank=True)
     quantity = models.IntegerField(default=1)
 
     def line_sum(self):
