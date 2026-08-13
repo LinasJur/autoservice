@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
+from django.core.paginator import Paginator, Page
+from django.db.models import Q
 
 from .models import Service, Car, Order, OrderLine
 # Create your views here.
@@ -15,8 +17,12 @@ def index(request):
 
 
 def cars(request):
+    cars = Car.objects.all()
+    paginator = Paginator(cars, 3)
+    page_number = request.GET.get('page')
+    paged_cars = paginator.get_page(page_number)
     context = {
-        'cars' : Car.objects.all(),
+        'cars' : paged_cars,
     }
     return render(request, template_name='cars.html', context=context)
 
@@ -36,3 +42,15 @@ class OrdersDetailView(generic.DetailView):
     model = Order
     template_name = 'order.html'
     context_object_name = 'order'
+
+def search(request):
+    query = request.GET.get('query')
+    context = {
+        'query' : query,
+        'cars' : Car.objects.filter(Q(make__icontains=query) |
+                                    Q(model__icontains=query) |
+                                    Q(license_plate__icontains=query) |
+                                    Q(vin_code__icontains=query) |
+                                    Q(client_name__icontains=query)),
+    }
+    return render(request, template_name='search.html', context=context)
