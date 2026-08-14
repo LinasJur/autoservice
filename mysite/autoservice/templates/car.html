@@ -3,8 +3,12 @@
 {% block title %} Mašina {% endblock %}
 
 {% block content %}
+{% if car.cover %}
+<img src="{{ car.cover.url }}" class="card-img-top" alt="..." style="max-width: 50%">
+{% endif %}
 <h4> Detali informacija </h4>
 <hr>
+
 <p>Gamintojas: <b>{{ car.make }}</b> </p>
 <p>Modelis: <b>{{ car.model }}</b></p>
 <p>Valstybinis numeris: <b>{{ car.license_plate }}</b></p>

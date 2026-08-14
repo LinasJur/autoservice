@@ -11,9 +11,10 @@ class Service(models.Model):
 class Car(models.Model):
     make = models.CharField()
     model = models.CharField()
-    license_plate = models.CharField()
-    vin_code = models.CharField()
+    license_plate = models.CharField(max_length=10)
+    vin_code = models.CharField(max_length=16)
     client_name = models.CharField()
+    cover = models.ImageField(upload_to='covers', null=True, blank=True)
 
     def __str__(self):
         return f"{self.make} {self.model}"

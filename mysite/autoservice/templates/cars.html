@@ -3,13 +3,27 @@
 {% block title %} Mašinos {% endblock %}
 
 {% block content %}
-
+<div class="row"
 {% for car in cars %}
-<a href="{% url 'car' car.pk %}" >
-    <p><b>{{car.make}}</b> {{car.model}} </p>
-</a>
-{% endfor %}
+<div class="col-md-4 d-flex align-items-stretch">
+    <div class="card mb-4 shadow-sm" style="width:300px">
+        {% if car.cover %}
+        <img src="{{ car.cover.url }}" class="card-img-top" alt="...">
+        {% else %}
+        {% load static %}
+        <img src="{% static 'img/no_image.jpg' %}" class="card-img-top" alt="...">
+        {% endif %}
+        <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">{{ car.make }}</h6>
+        <p class="card-text"><a href="{{ car.pk }}">{{ car.model }}</a></p>
+        </div>
+    </div>
+</div>
 
+
+
+{% endfor %}
+</div>
 {% if cars.has_other_pages %}
 <div class="container">
     <nav aria-label="...">
