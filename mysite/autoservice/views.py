@@ -8,10 +8,14 @@ from .models import Service, Car, Order, OrderLine
 # Create your views here.
 
 def index(request):
+    num_visits = request.session.get('num_visits', 1)
+    request.session['num_visits'] = num_visits + 1
+
     context = {
         'num_services' : Service.objects.count(),
         'num_cars' : Car.objects.count(),
         'num_done_orders' : Order.objects.filter(status= 'į').count(),
+        'num_visits' : num_visits,
     }
     return render(request, template_name='index.html', context=context)
 
