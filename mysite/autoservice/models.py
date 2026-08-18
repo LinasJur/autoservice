@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
+
 
 # Create your models here.
 class Service(models.Model):
@@ -26,6 +29,8 @@ class Order(models.Model):
                             blank=True,
                             related_name='orders')
     date = models.DateTimeField(auto_now_add=True)
+    car_owner = models.ForeignKey(to=User, verbose_name="Car_owner", on_delete=models.SET_NULL, null=True, blank=True)
+    due_back = models.DateField(null=True, blank=True)
 
     ORDER_STATUS = (
         ('p' , 'Patvirtinta'),
