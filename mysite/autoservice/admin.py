@@ -9,7 +9,7 @@ class OrderLineInLine(admin.TabularInline):
     fields = ['service', 'quantity', 'service_price', 'line_sum', ]
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['car', 'date', 'total', 'status', 'car_owner','due_back', ]
+    list_display = ['car', 'date', 'total', 'status', 'car_owner','due_back', 'is_overdue' ]
     inlines = [OrderLineInLine]
     list_editable  = ['status', 'due_back', 'car_owner']
     readonly_fields = ['date', 'total']

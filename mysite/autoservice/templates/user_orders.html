@@ -8,7 +8,11 @@
 {% for order in orders %}
 <p><b> Automobilis </b> {{ order.car }} </p>
 <p><b> Serviso statusas </b> {{ order.get_status_display }} </p>
-<p><b> Pasalaugos terminas iki </b> {{ order.due_back }} </p>
+<p><b> Pasalaugos terminas iki </b>
+    <span class="{% if order.is_overdue %}text-danger{% endif %}" >
+    {{ order.due_back }}
+    </span>
+</p>
 <hr>
 {% endfor %}
 {% endblock %}
