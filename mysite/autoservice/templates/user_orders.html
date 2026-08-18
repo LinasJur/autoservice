@@ -6,7 +6,10 @@
 
 <h1> Užsakymai </h1>
 {% for order in orders %}
-<p><b> Automobilis </b> {{ order.car }} </p>
+<a href="{% url 'order' order.pk %}">
+    <p><b> Automobilis </b> {{ order.car }} </p>
+</a>
+
 <p><b> Serviso statusas </b> {{ order.get_status_display }} </p>
 <p><b> Pasalaugos terminas iki </b>
     <span class="{% if order.is_overdue %}text-danger{% endif %}" >
