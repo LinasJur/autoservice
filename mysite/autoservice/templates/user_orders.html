@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %} Mano užsakymai {% endblock %}
+
+{% block content %}
+
+<h1> Užsakymai </h1>
+{% for order in orders %}
+<p><b> Automobilis </b> {{ order.car }} </p>
+<p><b> Serviso statusas </b> {{ order.get_status_display }} </p>
+<p><b> Pasalaugos terminas iki </b> {{ order.due_back }} </p>
+<hr>
+{% endfor %}
+{% endblock %}

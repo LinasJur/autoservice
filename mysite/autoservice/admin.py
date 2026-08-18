@@ -6,16 +6,16 @@ class OrderLineInLine(admin.TabularInline):
     model = OrderLine
     extra = 0
     readonly_fields = ['line_sum', 'service_price']
-    fields = ['service', 'quantity', 'service_price', 'line_sum']
+    fields = ['service', 'quantity', 'service_price', 'line_sum', ]
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['car', 'date', 'total', 'status']
+    list_display = ['car', 'date', 'total', 'status', 'car_owner','due_back', ]
     inlines = [OrderLineInLine]
-    list_editable  = ['status']
+    list_editable  = ['status', 'due_back', 'car_owner']
     readonly_fields = ['date', 'total']
     fieldsets = [
         ('General', {'fields': ('car', 'date', 'total')}),
-        ('Status', {'fields': ('status',)}),
+        ('Status', {'fields': ('status', 'due_back', 'car_owner')}),
     ]
 
 class CarAdmin(admin.ModelAdmin):

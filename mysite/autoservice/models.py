@@ -41,6 +41,9 @@ class Order(models.Model):
 
     status = models.CharField(verbose_name="Status", max_length=1, choices=ORDER_STATUS, blank=True, default='p')
 
+    def is_overdue(self):
+        return self.due_back and timezone.now().date() > self.due_back
+
     def __str__(self):
         return f'{self.car} ({self.date})'
 
