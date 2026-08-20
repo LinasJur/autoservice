@@ -29,16 +29,16 @@ class Order(models.Model):
                             blank=True,
                             related_name='orders')
     date = models.DateTimeField(auto_now_add=True)
-    car_owner = models.ForeignKey(to=User, verbose_name="Car_owner", on_delete=models.SET_NULL, null=True, blank=True)
-    due_back = models.DateField(null=True, blank=True)
 
+    car_owner = models.ForeignKey(to=User, on_delete=models.SET_NULL, null=True, blank=True)
+
+    due_back = models.DateField(null=True, blank=True)
     ORDER_STATUS = (
         ('p' , 'Patvirtinta'),
         ('v' , 'Vykdoma'),
         ('a' , 'Atšaukta'),
         ('į' , 'Įvykdyta'),
     )
-
     status = models.CharField(verbose_name="Status", max_length=1, choices=ORDER_STATUS, blank=True, default='p')
 
     def is_overdue(self):

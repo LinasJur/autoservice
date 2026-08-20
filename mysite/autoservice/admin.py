@@ -14,8 +14,8 @@ class OrderAdmin(admin.ModelAdmin):
     list_editable  = ['status', 'due_back', 'car_owner']
     readonly_fields = ['date', 'total']
     fieldsets = [
-        ('General', {'fields': ('car', 'date', 'total')}),
-        ('Status', {'fields': ('status', 'due_back', 'car_owner')}),
+        ('General', {'fields': ('car', 'date', 'total', 'car_owner', 'due_back')}),
+        ('Status', {'fields': ('status',)}),
     ]
 
 class CarAdmin(admin.ModelAdmin):
