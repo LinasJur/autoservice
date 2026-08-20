@@ -14,6 +14,7 @@
 <p>Valstybinis numeris: <b>{{ car.license_plate }}</b></p>
 <p>Vin kodas: <b>{{ car.vin_code }}</b> </p>
 <p>Savininko vardas: <b>{{ car.client_name }}</b></p>
+<p>Aprašymas: <b>{{ car.description | safe }}</b></p>
 <hr>
 <h4> Taisymai </h4>
 {% for order in car.orders.all %}
