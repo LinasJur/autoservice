@@ -1,6 +1,8 @@
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.urls import reverse_lazy
 from django.views import generic
 from django.core.paginator import Paginator, Page
 from django.db.models import Q
@@ -67,3 +69,8 @@ class UserOrderListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Order.objects.filter(car_owner=self.request.user)
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreationForm
+    template_name = 'signup.html'
+    success_url = reverse_lazy('login')
