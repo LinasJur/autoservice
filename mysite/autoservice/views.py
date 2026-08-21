@@ -1,15 +1,19 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, reverse
 from django.urls import reverse_lazy
 from django.views import generic
-from django.core.paginator import Paginator, Page
+from django.core.paginator import Paginator
 from django.db.models import Q
-
+from django.views.generic.edit import FormMixin
+from .forms import OrderCommentForm
 from .models import Service, Car, Order, OrderLine
-# Create your views here.
 
+
+
+
+
+# Create your views here.
 def index(request):
     num_visits = request.session.get('num_visits', 1)
     request.session['num_visits'] = num_visits + 1
@@ -45,10 +49,28 @@ class OrdersListView(generic.ListView):
     context_object_name = 'orders'
     paginate_by = 3
 
-class OrdersDetailView(generic.DetailView):
+class OrdersDetailView(FormMixin, generic.DetailView):
     model = Order
     template_name = 'order.html'
     context_object_name = 'order'
+    form_class = OrderCommentForm
+
+    def get_success_url(self):
+        return reverse('order', kwargs={'pk': self.object.id})
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.instance.order = self.get_object()
+        form.instance.author = self.request.user
+        form.save()
+        return super().form_valid(form)
 
 def search(request):
     query = request.GET.get('query')
@@ -74,3 +96,4 @@ class SignUpView(generic.CreateView):
     form_class = UserCreationForm
     template_name = 'signup.html'
     success_url = reverse_lazy('login')
+
