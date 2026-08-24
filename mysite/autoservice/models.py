@@ -5,6 +5,13 @@ from tinymce.models import HTMLField
 
 
 
+class Profile(models.Model):
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE)
+    photo = models.ImageField(upload_to="profile_pics", null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user.username} profilis"
+
 class Service(models.Model):
     name = models.CharField()
     price = models.IntegerField()
@@ -92,3 +99,4 @@ class OrderComment(models.Model):
 
     def __str__(self):
         return self.content
+
