@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} Administravimas {% endblock %}
+
+{% block content %}
+<h3>Užsakymų administravimas</h3>
+{% for instance in instances %}
+<p> {{instance.car}}, Įvesta - {{instance.date}}<br>
+    <span class = "{% if instance.is_overdue %} text-danger{% endif %}">
+    Savininkas: {{instance.car_owner}},
+    Darbus atlikti iki: {{instance.due_back}},
+    Būsena: {{instance.get_status_display}}
+    </span>
+</p>
+
+
+{% endfor %}
+
+{% endblock %}

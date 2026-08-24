@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, reverse, redirect
 from django.urls import reverse_lazy
@@ -85,14 +85,6 @@ def search(request):
     }
     return render(request, template_name='search.html', context=context)
 
-class UserOrderListView(LoginRequiredMixin, generic.ListView):
-    model = Order
-    template_name = 'user_orders.html'
-    context_object_name = 'orders'
-
-    def get_queryset(self):
-        return Order.objects.filter(car_owner=self.request.user)
-
 class SignUpView(generic.CreateView):
     form_class = UserCreationForm
     template_name = 'signup.html'
@@ -112,4 +104,23 @@ def profile(request):
         'p_form': p_form,
     }
     return render(request, template_name="profile.html", context=context)
+
+class UserOrderListView(LoginRequiredMixin, generic.ListView):
+    model = Order
+    template_name = 'user_orders.html'
+    context_object_name = 'orders'
+
+    def get_queryset(self):
+        return Order.objects.filter(car_owner=self.request.user)
+
+class OrderInstanceListView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
+    model = Order
+    template_name = 'instances.html'
+    context_object_name = 'instances'
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+
+
 
