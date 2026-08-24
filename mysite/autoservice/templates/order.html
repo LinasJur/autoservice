@@ -10,7 +10,12 @@
     <span class="{% if order.is_overdue %}text-danger{% endif %}">
         {{ order.due_back }}
     </span>
-<p>Klientas: <b>{{ order.client_name }}</b></p>
+<p>Klientas:
+    {% if order.car_owner.profile.photo %}
+        <img src="{{ order.car_owner.profile.photo.url }}" class="rounded-circle" style="width: 30px">
+    {% endif %}
+    <b>{{ order.car_owner }}</b>
+</p>
 
 <p>Užsakymo statusas: <b>{{ order.get_status_display }}</b></p>
 <table class="table table-hover">
@@ -48,8 +53,14 @@
 </form>
 {% endif %}
 {% for comment in order.comments.all %}
-<p><strong>{{ comment.author }}</strong>, <em>{{ comment.date }}</em><br>
-{{ comment.content }}</p>
+<p>
+    {% if comment.author.profile.photo %}
+        <img src="{{ comment.author.profile.photo.url }}" class="rounded-circle" style="width: 30px">
+    {% endif %}
+    <strong>{{ comment.author }}</strong>, <em>{{ comment.date }}</em>
+    <br>
+    {{ comment.content }}
+</p>
 {% empty %}
 <p> Komentarų šiuo metu nėra </p>
 {% endfor %}
